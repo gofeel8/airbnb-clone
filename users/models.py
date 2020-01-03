@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.shortcuts import reverse
+from core import managers as core_managers
+
 # Create your models here.
 
 
@@ -39,6 +41,7 @@ class User(AbstractUser):
         choices=CURRENCY_CHOICES, max_length=3, blank=True, default=CURRENCY_KRW
     )
     superhost = models.BooleanField(default=False)
+    objects = core_managers.CustomModelManager()
 
     def get_absolute_url(self):
         return reverse("users:profile", kwargs={"pk": self.pk})
